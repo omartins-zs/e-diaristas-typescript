@@ -20,7 +20,8 @@
     "jsx": "preserve",
     "paths": {
         "@styles/*" : ["ui/styles/*"]
-    }
+    },
+    "types": ["node"]
   },
   "include": [
     "next-env.d.ts",
@@ -28,6 +29,11 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "e2e",
+    "playwright.config.ts",
+    "src/test-utils.tsx"
   ]
 }
