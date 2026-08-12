@@ -1,34 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# e-diaristas
 
-## Getting Started
+Front-end da plataforma **e-diaristas**, onde o usuário informa seu CEP e visualiza os profissionais de limpeza que atendem a sua região.
 
-First, run the development server:
+Projeto construído com **Next.js + TypeScript + Material-UI**, dockerizado e coberto por testes unitários, de componente e end-to-end.
+
+## Stack
+
+- [Next.js](https://nextjs.org/) 11 + [React](https://react.dev/) 17
+- [TypeScript](https://www.typescriptlang.org/)
+- [Material-UI](https://mui.com/) (v5 alpha) com Emotion
+- [Axios](https://axios-http.com/) para consumo da API
+- [Jest](https://jestjs.io/) + [Testing Library](https://testing-library.com/) (unitários e de componente)
+- [Playwright](https://playwright.dev/) (end-to-end)
+- [Docker](https://www.docker.com/) + Docker Compose
+
+## Rodando com Docker (recomendado)
+
+Único pré-requisito: Docker instalado.
 
 ```bash
-npm run dev
-# or
-yarn dev
+docker compose up -d --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação fica disponível em http://localhost:3000.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Para parar:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```bash
+docker compose down
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Rodando localmente
 
-## Learn More
+Requer Node.js 18+.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Configuração da API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+O front consome uma API REST no endpoint `/api/diaristas-cidade?cep=`. A URL base é definida pela variável `NEXT_PUBLIC_API_URL` (padrão: `http://127.0.0.1:8000`).
 
-## Deploy on Vercel
+Como a chamada é feita pelo navegador, o endereço precisa ser acessível a partir da máquina do usuário. Para apontar para outro host, ajuste o build arg no `docker-compose.yml`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```yaml
+build:
+  args:
+    NEXT_PUBLIC_API_URL: http://meu-host:8000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Testes
+
+```bash
+npm test              # testes unitários e de componente
+npm run test:coverage # com relatório de cobertura
+npm run test:e2e      # testes end-to-end (sobe o servidor automaticamente)
+npm run test:e2e:ui   # end-to-end em modo interativo
+```
+
+A suíte cobre serviços, hooks, todos os componentes de UI e o fluxo completo de busca — incluindo CEP inválido, estado de carregamento, resultados, lista vazia e erro da API. O limite mínimo de cobertura configurado é de 90%.
+
+Os testes end-to-end mockam as respostas da API via `page.route`, então não é necessário ter o backend rodando.
+
+## Estrutura
+
+```
+src/
+├── data/
+│   ├── @types/       # interfaces compartilhadas
+│   ├── hooks/pages/  # lógica das páginas
+│   └── services/     # API e validações
+├── pages/            # rotas do Next.js
+├── ui/
+│   ├── components/   # componentes por categoria (inputs, surfaces, ...)
+│   ├── styles/       # estilos globais e por página
+│   └── themes/       # tema do Material-UI
+└── __tests__/        # testes das páginas
+e2e/                  # testes end-to-end (Playwright)
+```
+
+## Créditos
+
+Projeto desenvolvido a partir do curso de Next.js da [TreinaWeb](https://www.treinaweb.com.br/).
