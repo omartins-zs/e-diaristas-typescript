@@ -33,7 +33,8 @@ export default function Home() {
       <Container>
         <FormElementsContainer>
           <TextFieldMask
-            mask={'99.999-999'}
+            id={'cep'}
+            mask={'99999-999'}
             label={'Digite seu CEP'}
             fullWidth
             variant={'outlined'}
