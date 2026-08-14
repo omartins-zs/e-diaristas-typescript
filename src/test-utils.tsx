@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material';
 import theme from 'ui/themes/theme';
 
 /**
  * Wrapper de render que injeta o ThemeProvider da aplicação, necessário
- * pois os componentes estilizados (experimentalStyled) acessam `theme`
+ * pois os componentes estilizados (styled) acessam `theme`
  * diretamente via contexto.
  */
 function customRender(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {

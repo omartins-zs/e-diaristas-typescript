@@ -18,9 +18,19 @@ function getBuscarButton() {
 }
 
 async function digitarCep(valor: string) {
-  const input = screen.getByLabelText(/digite seu cep/i);
+  const input = screen.getByLabelText(/digite seu cep/i) as HTMLInputElement;
   await userEvent.type(input, valor);
+  // A mascara aplica o valor de forma assincrona (onAccept do IMask).
+  await waitFor(() =>
+    expect(input.value.replace(/\D/g, '')).toHaveLength(valor.replace(/\D/g, '').length)
+  );
   return input;
+}
+
+async function clicarBuscar() {
+  const botao = getBuscarButton();
+  await waitFor(() => expect(botao).toBeEnabled());
+  await userEvent.click(botao);
 }
 
 describe('Home (src/pages/index.tsx + useIndex)', () => {
@@ -34,13 +44,13 @@ describe('Home (src/pages/index.tsx + useIndex)', () => {
   it('mantém o botão desabilitado enquanto o CEP for inválido', async () => {
     render(<Home />);
     await digitarCep('1234567');
-    expect(getBuscarButton()).toBeDisabled();
+    await waitFor(() => expect(getBuscarButton()).toBeDisabled());
   });
 
   it('habilita o botão quando o CEP tem 8 dígitos', async () => {
     render(<Home />);
     await digitarCep('12345678');
-    expect(getBuscarButton()).toBeEnabled();
+    await waitFor(() => expect(getBuscarButton()).toBeEnabled());
   });
 
   it('exibe o spinner e desabilita o botão enquanto a busca está em andamento', async () => {
@@ -89,7 +99,7 @@ describe('Home (src/pages/index.tsx + useIndex)', () => {
 
     render(<Home />);
     await digitarCep('12345678');
-    await userEvent.click(getBuscarButton());
+    await clicarBuscar();
 
     expect(await screen.findByText('Maria Silva')).toBeInTheDocument();
     expect(screen.getByText('Joana Souza')).toBeInTheDocument();
@@ -116,7 +126,7 @@ describe('Home (src/pages/index.tsx + useIndex)', () => {
 
     render(<Home />);
     await digitarCep('12345678');
-    await userEvent.click(getBuscarButton());
+    await clicarBuscar();
 
     expect(await screen.findByText(/profissional atende/)).toBeInTheDocument();
   });
@@ -138,7 +148,7 @@ describe('Home (src/pages/index.tsx + useIndex)', () => {
 
     render(<Home />);
     await digitarCep('12345678');
-    await userEvent.click(getBuscarButton());
+    await clicarBuscar();
 
     expect(await screen.findByText('Carla Dias')).toBeInTheDocument();
     expect(screen.queryByText(/atende/)).not.toBeInTheDocument();
@@ -151,7 +161,7 @@ describe('Home (src/pages/index.tsx + useIndex)', () => {
 
     render(<Home />);
     await digitarCep('12345678');
-    await userEvent.click(getBuscarButton());
+    await clicarBuscar();
 
     expect(
       await screen.findByText(/Ainda nao temos nenhuma diarista disponivel/i)
@@ -163,7 +173,7 @@ describe('Home (src/pages/index.tsx + useIndex)', () => {
 
     render(<Home />);
     await digitarCep('12345678');
-    await userEvent.click(getBuscarButton());
+    await clicarBuscar();
 
     expect(await screen.findByText('CEP nao encontrado')).toBeInTheDocument();
   });

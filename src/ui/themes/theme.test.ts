@@ -11,6 +11,6 @@ describe('theme', () => {
   });
 
   it('define o raio de borda padrão', () => {
-    expect(theme.shape.borderRadius).toBe('3px');
+    expect(theme.shape.borderRadius).toBe(3);
   });
 });
