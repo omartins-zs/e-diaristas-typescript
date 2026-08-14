@@ -11,10 +11,11 @@
 
 <div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-11.0-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-4.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-17.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![Material-UI](https://img.shields.io/badge/Material--UI-v5-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.3-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Material UI](https://img.shields.io/badge/Material%20UI-v9-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
+[![Vulnerabilities](https://img.shields.io/badge/vulnerabilities-0-brightgreen?style=for-the-badge)](#-testes)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge)](#-testes)
@@ -69,10 +70,8 @@ Escolha **uma** das opções:
 
 ### 💻 Local
 
-- **Node.js** 18+
-- **npm** 8+
-
-> 💡 O Next.js 11 utiliza um hashing incompatível com o OpenSSL 3 do Node ≥ 17. A flag `--openssl-legacy-provider` **já está configurada** nos scripts do projeto, então versões novas do Node funcionam sem ajustes manuais.
+- **Node.js** 20.9+ (exigido pelo Next.js 16)
+- **npm** 10+
 
 ---
 
@@ -80,15 +79,18 @@ Escolha **uma** das opções:
 
 | Categoria | Tecnologia |
 |-----------|-----------|
-| 🧠 **Linguagem** | TypeScript 4.3 |
-| ⚛️ **Framework** | Next.js 11 + React 17 |
-| 🎨 **UI** | Material-UI v5 (alpha) + Emotion |
-| 🌐 **HTTP** | Axios |
-| 🎭 **Máscaras** | react-input-mask |
-| 🧪 **Testes unitários** | Jest + Testing Library |
+| 🧠 **Linguagem** | TypeScript 5.9 |
+| ⚛️ **Framework** | Next.js 16.3 (Pages Router + Turbopack) + React 19.2 |
+| 🎨 **UI** | Material UI v9 + Emotion (com SSR via `@mui/material-nextjs`) |
+| 🌐 **HTTP** | Axios 1.19 |
+| 🎭 **Máscaras** | react-imask |
+| 🧪 **Testes unitários** | Jest 30 + Testing Library |
 | 🎬 **Testes E2E** | Playwright |
-| 🐳 **Infra** | Docker + Docker Compose (multi-stage build) |
+| 🔍 **Lint** | ESLint 9 (flat config) + eslint-config-next |
+| 🐳 **Infra** | Docker + Docker Compose (multi-stage build, Node 22) |
 | 📐 **Padrões** | Componentização por categoria, custom hooks, camada de services |
+
+> 🔒 **`npm audit`: 0 vulnerabilidades.**
 
 ---
 
@@ -117,7 +119,9 @@ Além do escopo original do workshop, o projeto foi evoluído com:
 - 🐳 **Containerização completa**, permitindo executar em qualquer máquina com um único comando
 - 🧪 **Suíte de testes automatizados** com 100% de cobertura
 - ⚙️ **Configuração por variável de ambiente** para a URL da API
-- 🐛 **Correções de bugs** encontrados durante a escrita dos testes (máscara de CEP incorreta, label sem associação ao input e tipagem que quebrava o build de produção)
+- 🐛 **Correções de bugs** encontrados durante a escrita dos testes (máscara de CEP incorreta, label sem associação ao input, seletor CSS inválido e tipagens que quebravam o build)
+- ⬆️ **Modernização completa da stack**, saindo de Next.js 11 / React 17 / Material-UI v5 alpha para **Next.js 16 / React 19 / Material UI v9**, zerando as 35 vulnerabilidades reportadas pelo `npm audit`
+- 🖼️ **SSR de estilos com Emotion** e migração das fontes para o `_document`, eliminando o flash de conteúdo sem estilo
 
 ---
 
@@ -197,11 +201,12 @@ npm test              # testes unitários e de componente
 npm run test:coverage # com relatório de cobertura
 npm run test:e2e      # testes end-to-end (sobe o servidor automaticamente)
 npm run test:e2e:ui   # end-to-end em modo interativo
+npm run lint          # ESLint
 ```
 
 | Tipo | Quantidade | Cobertura |
 |------|-----------|-----------|
-| 🧩 Unitários e de componente (Jest) | 36 testes | **100%** (mínimo exigido: 90%) |
+| 🧩 Unitários e de componente (Jest) | 41 testes | **100%** (mínimo exigido: 90%) |
 | 🎬 End-to-end (Playwright) | 5 cenários | Fluxo completo da home |
 
 A suíte cobre services, hooks, todos os componentes de UI e o fluxo completo de busca — incluindo CEP inválido, estado de carregamento, resultados, lista vazia e erro da API.
@@ -235,7 +240,7 @@ build:
 │   │   ├── @types/           # 📐 interfaces compartilhadas
 │   │   ├── hooks/pages/      # 🪝 lógica das páginas (custom hooks)
 │   │   └── services/         # 🌐 API e validações
-│   ├── pages/                # 🗺️ rotas do Next.js
+│   ├── pages/                # 🗺️ rotas do Next.js (_app e _document)
 │   ├── ui/
 │   │   ├── components/       # 🧩 componentes por categoria
 │   │   │   ├── data-display/
@@ -243,10 +248,11 @@ build:
 │   │   │   ├── inputs/
 │   │   │   └── surfaces/
 │   │   ├── styles/           # 💅 estilos globais e por página
-│   │   └── themes/           # 🎨 tema do Material-UI
+│   │   └── themes/           # 🎨 tema do Material UI
 │   └── test-utils.tsx        # 🛠️ render helper com ThemeProvider
 ├── Dockerfile                # 🐳 build multi-stage
 ├── docker-compose.yml        # 🐳 orquestração
+├── eslint.config.mjs         # 🔍 ESLint (flat config)
 ├── jest.config.js            # 🧪 configuração do Jest
 └── playwright.config.ts      # 🎬 configuração do Playwright
 ```
@@ -255,12 +261,13 @@ build:
 
 ## 📝 Melhorias Futuras
 
-- [ ] Atualizar Next.js 11 → 14+ e Material-UI v5 alpha → estável
-- [ ] Resolver as vulnerabilidades reportadas pelo `npm audit` (herdadas das dependências antigas)
+- [x] ~~Atualizar Next.js 11 → 16 e Material-UI v5 alpha → Material UI v9~~
+- [x] ~~Resolver as vulnerabilidades reportadas pelo `npm audit`~~
+- [x] ~~Mover as fontes e o CSS do `_app` para o `_document`~~
 - [ ] Adicionar pipeline de CI executando testes e build a cada push
 - [ ] Implementar as telas seguintes do fluxo de contratação
 - [ ] Adicionar preview (GIF/screenshots) ao repositório
-- [ ] Mover as fontes e o CSS do `_app` para o `_document` (avisos do ESLint do Next)
+- [ ] Avaliar a migração do Pages Router para o App Router
 
 ---
 
@@ -270,6 +277,8 @@ build:
 - 🧪 Os testes das páginas ficam em `src/__tests__/` e **não** dentro de `src/pages/` — o Next.js trataria qualquer arquivo dessa pasta como uma rota.
 - 🎯 O limite mínimo de cobertura está definido em `jest.config.js` (`coverageThreshold`): a suíte falha se cair abaixo de 90%.
 - 🔍 Para depurar os testes E2E visualmente, use `npm run test:e2e:ui`.
+- ⚡ O Next.js 16 usa **Turbopack por padrão** no `dev` e no `build` — o build de produção leva ~3s.
+- 🎨 O `_document.tsx` injeta os estilos do Emotion gerados no servidor via `@mui/material-nextjs`, evitando o flash de conteúdo sem estilo.
 
 ---
 
