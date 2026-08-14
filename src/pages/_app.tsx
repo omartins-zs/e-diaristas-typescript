@@ -1,35 +1,30 @@
 import '@styles/globals.css';
-import { ThemeProvider } from '@material-ui/core';
-import theme from 'ui/themes/theme';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import { AppCacheProvider } from '@mui/material-nextjs/v16-pagesRouter';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import Header from 'ui/components/surfaces/Header/Header'
+import theme from 'ui/themes/theme';
+import Header from 'ui/components/surfaces/Header/Header';
 import Footer from 'ui/components/surfaces/Footer/Footer';
-import { AppContainer}  from 'ui/styles/pages/_app.style'
+import { AppContainer } from 'ui/styles/pages/_app.style';
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp(props: AppProps) {
+  const { Component, pageProps } = props;
+
   return (
-    <>
-      <head>
+    <AppCacheProvider {...props}>
+      <Head>
         <title>e-diaristas</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-         rel="stylesheet"
-        />
-        <link
-         href="/fonts/tw-icons/css/treinaweb-icons.css"
-         rel="stylesheet"
-          />
-      </head>
+        <meta name={'viewport'} content={'width=device-width, initial-scale=1'} />
+      </Head>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <AppContainer>
-        <Header/>
-      <Component {...pageProps} />
-      <Footer />
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
         </AppContainer>
-    </ThemeProvider>
-    </>
+      </ThemeProvider>
+    </AppCacheProvider>
   );
 }
-
-export default MyApp
