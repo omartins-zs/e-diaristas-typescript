@@ -1,23 +1,17 @@
-module.exports = {
+const nextJest = require('next/jest');
+
+// Carrega o next.config.js e os aliases do tsconfig, e usa o SWC para
+// transformar os arquivos (dispensando uma configuracao propria de Babel).
+const createJestConfig = nextJest({ dir: './' });
+
+/** @type {import('jest').Config} */
+const customJestConfig = {
   testEnvironment: 'jsdom',
-  rootDir: '.',
-  modulePaths: ['<rootDir>/src'],
-  moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '^@styles/(.*)$': '<rootDir>/src/ui/styles/$1',
-  },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  testPathIgnorePatterns: [
-    '<rootDir>/.next/',
-    '<rootDir>/node_modules/',
-    '<rootDir>/e2e/',
-  ],
+  modulePaths: ['<rootDir>/src'],
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/', '<rootDir>/e2e/'],
   collectCoverage: true,
-  collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/data/@types/**',
-  ],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts', '!src/data/@types/**'],
   coverageThreshold: {
     global: {
       statements: 90,
@@ -27,3 +21,5 @@ module.exports = {
     },
   },
 };
+
+module.exports = createJestConfig(customJestConfig);

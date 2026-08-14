@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 
-// JSDOM não implementa matchMedia; várias partes do Material-UI dependem dele.
+// JSDOM não implementa matchMedia; várias partes do Material UI dependem dele.
 if (typeof window !== 'undefined' && !window.matchMedia) {
   window.matchMedia = function matchMedia(query) {
     return {
