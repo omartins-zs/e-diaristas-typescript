@@ -3,9 +3,8 @@ services:
     build:
       context: .
       args:
-        # Endereço da API acessado pelo navegador do usuário.
-        # Ajuste aqui se a API não rodar em 127.0.0.1:8000.
-        NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
+        # A URL da API e lida em tempo de build (prefixo NEXT_PUBLIC_).
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://127.0.0.1:8000}
     ports:
-      - "3000:3000"
+      - "${APP_PORT:-3000}:3000"
     restart: unless-stopped
