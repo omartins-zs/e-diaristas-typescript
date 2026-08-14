@@ -1,5 +1,5 @@
-import { experimentalStyled as styled } from "@material-ui/core";
-import { Container, Typography } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+import { Container, Typography, TypographyProps } from "@mui/material";
 
 export const FooterStyled = styled('footer')`
     background-color: ${({ theme }) => theme.palette.primary.main};
@@ -20,9 +20,8 @@ export const FooterContainer = styled(Container)`
     }
 `;
 
-export const FooterTitle = styled((props) => (
-    <Typography component={'h2'} variant={'body2'} {...props}/>
-
+export const FooterTitle = styled((props: TypographyProps) => (
+    <Typography component={'h2'} variant={'body2'} {...props} />
 ))`
     font-weight: bold;
 `;

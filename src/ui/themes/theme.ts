@@ -1,4 +1,4 @@
-import {createTheme} from '@material-ui/core';
+import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
@@ -37,7 +37,7 @@ const theme = createTheme({
     fontFamily: "Poppins",
   },
   shape: {
-    borderRadius: "3px",
+    borderRadius: 3,
   },
   components: {
     MuiButton: {

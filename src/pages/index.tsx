@@ -2,8 +2,7 @@ import SafeEnvironment from "ui/components/feedback/SafeEnvironment/SafeEnvironm
 import PageTitle from 'ui/components/data-display/PageTitle/PageTitle';
 import UserInformation from 'ui/components/data-display/UserInformation/UserInformation';
 import TextFieldMask from 'ui/components/inputs/TextFieldMask/TextFieldMask';
-import { Button, Typography, Container, CircularProgress } from "@material-ui/core";
-import { Component } from "react";
+import { Button, Typography, Container, CircularProgress } from "@mui/material";
 import {
   FormElementsContainer,
   ProfissionaisPaper,
@@ -37,11 +36,9 @@ export default function Home() {
             mask={'99999-999'}
             label={'Digite seu CEP'}
             fullWidth
-            variant={'outlined'}
             value={cep}
             onChange={(event) => setCep(event.target.value)}
           />
-          {cepValido}
           {erro && <Typography color={'error'}>{erro}</Typography>}
           <Button
             variant={'contained'}
