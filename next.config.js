@@ -1,9 +1,6 @@
+/** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
-  eslint: {
-    // eslint é uma devDependency; a imagem de produção do Docker instala
-    // apenas dependências de produção, então o lint roda separadamente
-    // (via `npm run lint`) e não bloqueia o build.
-    ignoreDuringBuilds: true,
-  },
-}
+  // Os testes E2E acessam o servidor de desenvolvimento por 127.0.0.1.
+  allowedDevOrigins: ['127.0.0.1'],
+};
