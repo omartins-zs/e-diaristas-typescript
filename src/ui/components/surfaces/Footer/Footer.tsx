@@ -1,6 +1,7 @@
 import React from "react";
+import Image from "next/image";
 import { FooterStyled, FooterContainer, FooterTitle, AppList } from './Footer.style';
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box } from "@mui/material";
 
 const Footer = () => {
     return <FooterStyled>
@@ -17,12 +18,22 @@ const Footer = () => {
             <AppList>
                 <li>
                     <a href={'/'} target={'_blank'} rel={'noopener noreferrer'}>
-                        <img src={'/img/logos/app-store.png'} alt={'App Store'} />
+                        <Image
+                            src={'/img/logos/app-store.png'}
+                            alt={'App Store'}
+                            width={488}
+                            height={144}
+                        />
                     </a>
                 </li>
                 <li>
                     <a href={'/'} target={'_blank'} rel={'noopener noreferrer'}>
-                        <img src={'/img/logos/google-play.png'} alt={'Play Store'} />
+                        <Image
+                            src={'/img/logos/google-play.png'}
+                            alt={'Play Store'}
+                            width={488}
+                            height={144}
+                        />
                     </a>
                 </li>
             </AppList>
