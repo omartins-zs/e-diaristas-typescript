@@ -6,9 +6,11 @@ Guia para executar o sistema utilizando Docker Desktop.
 
 ## Stack e containers
 
-| Container | Função | Porta |
-| --- | --- | --- |
-| web | Aplicação Next.js (`next start`) | 8080 |
+| Serviço | Container | Função | Porta |
+| --- | --- | --- | --- |
+| web | `e-diaristas-typescript-web-1` | Aplicação Next.js (`next start`) | 8080 |
+
+> O `docker-compose.yml` declara `name: e-diaristas-typescript`, então o prefixo dos containers é fixo e **não** depende do nome da pasta onde o repositório está clonado.
 
 > Este projeto é um front-end sem estado. Não há containers de banco de dados, servidor web adicional, cache, filas ou administração — o `next start` já serve a aplicação diretamente.
 

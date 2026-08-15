@@ -48,7 +48,7 @@ Validação da saúde da aplicação no ambiente de desenvolvimento:
 
 | Verificação | Resultado Esperado |
 | --- | --- |
-| Container (`treina_web_completo-web-1`) | `Up` / rodando na porta 3000 |
+| Container (`e-diaristas-typescript-web-1`) | `Up` / rodando na porta 3000 |
 | Home (`GET /`) | HTTP `200` |
 | Busca com CEP válido | Lista de profissionais ou mensagem de região sem cobertura |
 | Busca com a API indisponível | Mensagem *"CEP nao encontrado"* (a aplicação não quebra) |
